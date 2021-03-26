@@ -3,7 +3,7 @@
  * https://observablehq.com/@d3/color-legend
  **/
 
-function _legend({
+function legend({
                          color,
                          title,
                          tickSize = 6,

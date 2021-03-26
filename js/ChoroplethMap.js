@@ -29,7 +29,7 @@ function drawMap({svg, data, colorScheme}) {
       const maxValue = d3.max(usGeoData.features.map(state => state.properties.value))
       
       // Adding a legend. See more in the _legend.js
-      _legend({
+      legend({
         color: d3.scaleSequential([0, maxValue], colorScheme),
         title: "Shooting since 2015",
         svg: svg
