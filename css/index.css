@@ -1,0 +1,123 @@
+/*common styles */
+body {
+  color: #2F394D;
+  background-color: #fafaf2;
+  font-family: "Inconsolata", Helvetica, Arial, sans-serif;
+}
+
+article {
+  padding-right: 10rem;
+  max-width: 30rem;
+}
+
+.sticky {
+  position: sticky;
+  width: calc(100vw - 30rem);
+  height: 60vh;
+  background: none;
+  margin: 0;
+  top: 20vh;
+  right: 0;
+}
+
+.wrap {
+  display: flex;
+  max-width: 100rem;
+  margin: 3rem auto;
+  padding: 1rem;
+}
+
+.article {
+  margin-top: 60px;
+}
+
+.title {
+  width: 100%;
+  margin: 0 auto;
+  text-align: end;
+}
+
+.step {
+  font-size: 20px;
+  margin-bottom: 80vh;
+  text-align: justify;
+  margin-left: 40px;
+}
+
+.step>p {
+  text-indent: 25px;
+}
+
+.graphs {
+  height: 100%;
+}
+
+.circle-text {
+  font-size: 14px;
+}
+
+/*line chart styles*/
+.line-axis {
+  font-family: "Inconsolata", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+}
+
+.chart-title {
+  text-anchor: start;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.focus {
+  fill: #efefef;
+  opacity: 0;
+  stroke: #d3d3d3;
+  stroke-width: 2;
+}
+
+.focus-text {
+  font-size: 16px;
+  font-weight: bold;
+  opacity: 0;
+}
+
+/*bar chart styles*/
+.bar:hover {
+  fill-opacity: .9;
+}
+
+.bar-text {
+  font-size: 20px;
+  font-weight: bold;
+  fill: #2F394D;
+}
+
+/* map styles*/
+.map-state {
+  stroke: #fafafa;
+}
+
+.map-circle {
+  fill: none;
+  opacity: 0.3;
+  pointer-events: none;
+  stroke-width: 1px;
+  stroke: #ea3b50;
+}
+
+.map-state:hover {
+  fill-opacity: .9;
+}
+
+.d3-tip {
+  padding: 8px;
+  position: fixed !important;
+}
+
+.d3-tip > h3, .d3-tip > p {
+  margin: 0;
+  font-family: "Inconsolata", Helvetica, Arial, sans-serif;
+}
+
+
+

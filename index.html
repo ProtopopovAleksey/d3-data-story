@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D3-story</title>
+  
+  <!-- D3-->
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  
+  <!-- Plugin and styles for D3 tooltips-->
+  <!-- https://www.npmjs.com/package/d3-v6-tip-->
+  <script src="https://unpkg.com/d3-v6-tip@1.0.6/build/d3-v6-tip.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bumbeishvili/d3-tip-for-v6@4/d3-tip.min.css">
+  
+  <!-- Include Inconsolata font family-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- Include local styles-->
+  <link rel="stylesheet" href="css/index.css">
+  
+  <!-- Include Scrollama library for interactive scroll tracking-->
+  <!-- https://www.npmjs.com/package/scrollama-->
+  <script src="https://unpkg.com/intersection-observer"></script>
+  <script src="https://unpkg.com/scrollama"></script>
+  
+  <!-- Include local JS-->
+  <script src="data/us-murder-data.js"></script>
+  <script src="data/us-population-data.js"></script>
+  <script src="js/_legend.js"></script>
+  <script src="js/_colorSchemes.js"></script>
+  <script src="js/LineChart.js"></script>
+  <script src="js/DonutChart.js"></script>
+  <script src="js/ChoroplethMap.js"></script>
+  <script src="js/BarChart.js"></script>
+</head>
+<body>
+
+<script type="module">
+  // async load local data file
+  d3.csv('./data/fatal-police-shootings-data.csv')
+    .then(data => {
+      
+      // finding the height and width of the container
+      const container = document.getElementById('graphs')
+      const width = container.offsetWidth
+      const height = container.offsetHeight
+      
+      // scrollama initialization
+      // API: https://github.com/russellgoldenberg/scrollama#api
+      const scroller = scrollama();
+      scroller
+        .setup({
+          step: ".step",
+          offset: 0.3
+        })
+        // the action that happens when you step into a step
+        .onStepEnter(({element, index, direction}) => {
+          
+          // cleaning svg with animation
+          d3.select("#graphs").select("svg")
+            .transition()         // call transition method
+            .duration(500)        // transition duration
+            .style("opacity", 0)  // transition object
+          
+          // timeout until the end of the animation
+          setTimeout(() => {
+            // removal of svg element and tooltip if any
+            d3.select("#graphs").select("svg").remove()
+            d3.select(".d3-tip").remove()
+            
+            // creation of svg in #graphs container
+            const svg = d3.select('#graphs')
+              .append("svg")
+              .attr("width", width)
+              .attr("height", height)
+              .style("overflow", "visible")
+              .style("display", "block")
+            
+            // drawing one or another graph depending on the step number
+            switch (element.dataset.step) {
+              case '1':
+                drawLineChart({svg, width, height, data})
+                break;
+              case '2':
+                drawDonutChart({svg, width, height, data})
+                break;
+              case '3':
+                drawBarChart({svg, width, height, data, colorScheme})
+                break;
+              case '4':
+                drawMap({svg, width, height, data, colorScheme})
+                break;
+            }
+          }, 500)
+        })
+    })
+</script>
+<div class="wrap">
+  <article class="article">
+    <div class="title">
+      <h2>978 people have been shot and<br> killed by police in the past year</h2>
+    </div>
+    <section class="step" data-step="1">
+      <p>
+        In 2015, The Washington Post began to log every fatal shooting by an on-duty police officer in the United
+        States. In that time there have been more than 5,000 such shootings recorded by The Post.
+      </p>
+      <p>
+        Despite the unpredictable events that lead to fatal shootings, police nationwide have shot and killed almost the
+        same number of people annually — nearly 1,000 — since The Post began its project. Probability theory may offer
+        an explanation. It holds that the quantity of rare events in huge populations tends to remain stable absent
+        major societal changes, such as a fundamental shift in police culture or extreme restrictions on gun ownership.
+      </p>
+    </section>
+    <section class="step" data-step="2">
+      <p>
+        Although half of the people shot and killed by police are White, Black Americans are shot at a disproportionate
+        rate. They account for less than 13 percent of the U.S. population, but are killed by police at more than twice
+        the rate of White Americans. Hispanic Americans are also killed by police at a disproportionate rate.
+      </p>
+    </section>
+    <section class="step" data-step="3">
+      <p>
+        An overwhelming majority of people shot and killed by police are male — over 95 percent. More than half the
+        victims are between 20 and 40 years old.
+      </p>
+    </section>
+    <section class="step" data-step="4">
+      <p>
+        Police shootings have taken place in every state and have occurred more frequently in cities where populations
+        are concentrated. States with the highest rates of shootings are New Mexico, Alaska and Oklahoma.
+      </p>
+      <p>
+        Each circle on the map below marks the location of a deadly shooting.
+      </p>
+    </section>
+  </article>
+  <figure class="sticky">
+    <div id="graphs" class="graphs"></div>
+  </figure>
+</div>
+</body>
+</html>
