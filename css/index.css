@@ -37,6 +37,12 @@ article {
   text-align: end;
 }
 
+.title > a {
+  font-size: 24px;
+  color: #2F394D;
+  text-decoration: none;
+}
+
 .step {
   font-size: 20px;
   margin-bottom: 80vh;
